@@ -18,27 +18,32 @@ def talk(text):
 
 talk("Hola amigos")
 
-# def listen():
-#     try:
-#         with sr.Microphone() as source:
-#             print("Escuchando mi pana...")
-#             pc = listener.listen(source)
-#             rec = listener.recognize_google(pc)
-#             rec = rec.lower()
-#             if name in rec:
-#                 rec = rec.replace(name, '')
+def listen():
+    try:
+        with sr.Microphone() as source:
+            print("Escuchando mi pana...")
+            pc = listener.listen(source)
+            rec = listener.recognize_google(pc)
+            rec = rec.lower()
+            if name in rec:
+                rec = rec.replace(name, '')
 
-#     except:
-#         pass
-#     return rec
+    except:
+        pass
+    return rec
 
-# def run_juanita():
-#     rec = listen()
-#     if 'reproduce' in rec:
-#         music = rec.replace('reproduce','')
-#         print("Reproduciendo " + music)
-#         talk("Reproduciendo " + music)
-#         pywhatkit.playonyt(music)
+def run_juanita():
+    while True:
+        try:
+            rec = listen()
+        except UnboundLocalError:
+            talk("No te entendí, intenta de nuevo...")
+            continue
+        if 'reproduce' in rec:
+            music = rec.replace('reproduce','')
+            print("Reproduciendo " + music)
+            talk("Reproduciendo " + music)
+            pywhatkit.playonyt(music)
 
-# if __name__ == '__main__':
-#     run_juanita()
+if __name__ == '__main__':
+    run_juanita()
